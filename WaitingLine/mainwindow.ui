@@ -127,7 +127,7 @@ d'attente des clients</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QSpinBox" name="spinBox_3">
+           <widget class="QSpinBox" name="SpinBox">
             <property name="suffix">
              <string> personnes</string>
             </property>
