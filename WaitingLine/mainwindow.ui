@@ -22,7 +22,7 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="PushButtonGlobalResult">
          <property name="text">
           <string>Afficher un résumé
 des données</string>
@@ -30,7 +30,7 @@ des données</string>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="PushButtonGrathLenth">
          <property name="text">
           <string>Analyser le temps
 la longueur de la queue</string>
@@ -38,7 +38,7 @@ la longueur de la queue</string>
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="PushButtonGraphTime">
          <property name="text">
           <string>Analyser le temps
 d'attente des clients</string>
@@ -46,7 +46,7 @@ d'attente des clients</string>
         </widget>
        </item>
        <item row="0" column="0" colspan="3">
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="LabelAnswer">
          <property name="text">
           <string>Sélectionnez une question pour afficher une réponse</string>
          </property>
@@ -56,12 +56,10 @@ d'attente des clients</string>
         </widget>
        </item>
       </layout>
-      <zorder>groupBox</zorder>
-      <zorder>groupBox</zorder>
-      <zorder>pushButton</zorder>
-      <zorder>pushButton_2</zorder>
-      <zorder>pushButton_3</zorder>
-      <zorder>label_7</zorder>
+      <zorder>PushButtonGraphTime</zorder>
+      <zorder>PushButtonGrathLenth</zorder>
+      <zorder>PushButtonGlobalResult</zorder>
+      <zorder>LabelAnswer</zorder>
      </widget>
     </item>
     <item row="0" column="1">
@@ -78,7 +76,7 @@ d'attente des clients</string>
         </widget>
        </item>
        <item row="0" column="1" colspan="2">
-        <widget class="QComboBox" name="comboBox_3"/>
+        <widget class="QComboBox" name="ComboBoxQuestion"/>
        </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_4">
@@ -87,14 +85,14 @@ d'attente des clients</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="0" column="0">
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="RadioButtonQueue">
             <property name="text">
              <string>Dans la queue</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="RadioButtonSystem">
             <property name="text">
              <string>Dans la boutique</string>
             </property>
@@ -145,14 +143,14 @@ d'attente des clients</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_7">
           <item row="0" column="0" colspan="2">
-           <widget class="QRadioButton" name="radioButton_3">
+           <widget class="QRadioButton" name="RadioButtonPlusDe">
             <property name="text">
              <string>plus de</string>
             </property>
            </widget>
           </item>
           <item row="0" column="2" colspan="2">
-           <widget class="QSpinBox" name="spinBox_6">
+           <widget class="QSpinBox" name="SpinBoxPlus">
             <property name="suffix">
              <string/>
             </property>
@@ -166,14 +164,14 @@ d'attente des clients</string>
            </widget>
           </item>
           <item row="1" column="0" colspan="2">
-           <widget class="QRadioButton" name="radioButton_4">
+           <widget class="QRadioButton" name="RadioButtonMoinsDe">
             <property name="text">
              <string>moins de</string>
             </property>
            </widget>
           </item>
           <item row="1" column="2" colspan="2">
-           <widget class="QSpinBox" name="spinBox_7">
+           <widget class="QSpinBox" name="SpinBoxMoins">
             <property name="suffix">
              <string/>
             </property>
@@ -187,14 +185,14 @@ d'attente des clients</string>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QRadioButton" name="radioButton_5">
+           <widget class="QRadioButton" name="RadioButtonEntre">
             <property name="text">
              <string>entre</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QSpinBox" name="spinBox_4"/>
+           <widget class="QSpinBox" name="SinBoxInf"/>
           </item>
           <item row="2" column="2">
            <widget class="QLabel" name="label_10">
@@ -204,7 +202,7 @@ d'attente des clients</string>
            </widget>
           </item>
           <item row="2" column="3">
-           <widget class="QSpinBox" name="spinBox_5"/>
+           <widget class="QSpinBox" name="SpinBoxSup"/>
           </item>
           <item row="2" column="4">
            <widget class="QLabel" name="label_12">
