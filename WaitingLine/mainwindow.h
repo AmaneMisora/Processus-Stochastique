@@ -15,6 +15,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
+private slots:
+    void on_ComboBoxQuestion_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 };
