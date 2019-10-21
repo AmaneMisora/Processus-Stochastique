@@ -4,6 +4,7 @@ Calculation::Calculation()
 {
 }
 
+<<<<<<< HEAD
 /**
  * @brief Calculation::L
  * @param S
@@ -13,10 +14,13 @@ Calculation::Calculation()
  * @return le nombre moyen de personnes dans le système
  *
  */
+=======
+>>>>>>> master
 double Calculation::L(int S, int K, double lambda, double mu)
 {
 
     qDebug() << S << K << lambda << mu;
+<<<<<<< HEAD
 
     if(S == 1)
     {
@@ -51,4 +55,13 @@ double Calculation::L(int S, int K, double lambda, double mu)
     }
 
     return -1;
+=======
+    if(S == 1)
+    {
+        if(K == 0)
+        {
+            return lambda / (mu - lambda);
+        }
+    }
+>>>>>>> master
 }

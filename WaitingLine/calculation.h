@@ -2,7 +2,10 @@
 #define CALCULATION_H
 
 #include <QDebug>
+<<<<<<< HEAD
 #include <QtMath>
+=======
+>>>>>>> master
 
 class Calculation
 {

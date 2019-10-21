@@ -155,6 +155,7 @@ void MainWindow::update_result()
         {
             QString Answer = "";
 
+<<<<<<< HEAD
             double Result = Calculation::L(S,K,lamdba, mu);
 
 
@@ -163,6 +164,13 @@ void MainWindow::update_result()
                 Answer.append("Il y aura en moyenne ");
                 Answer.append(QString::number(Result));
                 Answer.append(" client(s) dans la boutique.");
+=======
+            if(lamdba < mu)
+            {
+                Answer.append("Il y aura en moyenne ");
+                Answer.append(QString::number(Calculation::L(S,K,lamdba, mu)));
+                Answer.append(" client(s) dans la file.");
+>>>>>>> master
             }
             else
             {
