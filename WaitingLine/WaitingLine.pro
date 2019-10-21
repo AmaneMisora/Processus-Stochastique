@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     Model/donnee.cpp \
     Model/probleme.cpp \
-    Model/solution.cpp
+    Model/solution.cpp \
+    calculation.cpp
 
 HEADERS  += mainwindow.h \
     Model/donnee.h \
     Model/probleme.h \
-    Model/solution.h
+    Model/solution.h \
+    calculation.h
 
 FORMS    += mainwindow.ui
