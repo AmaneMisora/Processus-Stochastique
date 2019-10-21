@@ -13,6 +13,7 @@ private:
 
 public:
     Solution();
+    Solution(Probleme prob);
     ~Solution();
 
     double getValeur_L() const;
@@ -25,6 +26,13 @@ public:
     void setValeur_Wq(double value);
     Probleme getProbleme() const;
     void setProbleme(const Probleme &value);
+
+    void calculerValeur_L();
+    void calculerValeur_Lq();
+    void calculerValeur_W();
+    void calculerValeur_Wq();
+
+
 };
 
 #endif // SOLUTION_H

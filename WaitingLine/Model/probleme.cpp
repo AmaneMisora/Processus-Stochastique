@@ -1,6 +1,6 @@
 #include "probleme.h"
- /**
-  * @brief Getter : Donnee
+/**
+ * @brief Getter : Donnee
 */
 Donnee Probleme::getDonnee() const
 {
@@ -46,6 +46,21 @@ void Probleme::setService_temps_moyen(int value)
 {
     service_temps_moyen = value;
 }
+/**
+ * @brief Getter : Type_prob
+ */
+int Probleme::getType_prob() const
+{
+    return type_prob;
+}
+
+/**
+ * @brief Setter : Type_prob
+ */
+void Probleme::setType_prob(int value)
+{
+    type_prob = value;
+}
 
 /**
  * @brief Constructeur par défaut
@@ -56,11 +71,26 @@ Probleme::Probleme()
 }
 
 /**
- * @brief Constructeur pour calculer deux parametres
+ * @brief Constructeur par analyser la donnée
  * @param donnee
  */
 Probleme::Probleme(Donnee donnee)
 {
 
+}
+
+/**
+ * @brief Initialiser la type de probleme
+ * @details 1: M|M|1|infinité; 2: M|M|1|K;  3:M|M|S|infinité
+ */
+void Probleme::initialiserType()
+{
+    if(this->donnee.getNb_service() == 1) {
+        //serveur unique
+//        if()
+    } else {
+        // type de probleme : M|M|S|infinité
+        this->setType_prob(3);
+    }
 }
 
