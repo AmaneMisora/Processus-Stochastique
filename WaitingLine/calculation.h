@@ -2,6 +2,7 @@
 #define CALCULATION_H
 
 #include <QDebug>
+#include <QtMath>
 
 class Calculation
 {
