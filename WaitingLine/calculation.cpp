@@ -50,26 +50,10 @@ double Calculation::L(int S, int K, double lambda, double mu)
     }
     else // M | M | S
     {
-        /*
-        double rho = lambda / (mu * S);
-
-        // Calcule de Q0
-        double sum = 0;
-
-        for(int j = 0; j < S-1; j++)
-        {
-            sum += ( (qPow((rho * S), j) /  factorial(j) ) + ( (qPow((rho * S), S) / (factorial(S)*(1-rho)))));
-        }
-
-        double q0 = 1/sum;
-
-        // Clacul de L
-        double Lq = ( q0 * qPow(S,S) * qPow(rho, S+1) / factorial(S) ) * 1 / qPow((1-rho), 2);*/
-
         return Lq(S, K, lambda, mu) + (lambda / mu);
     }
 
-    return -1;
+    return -2;
 }
 
 double Calculation::Lq(int S, int K, double lambda, double mu)
@@ -123,7 +107,73 @@ double Calculation::Lq(int S, int K, double lambda, double mu)
         return ( q0 * qPow(S,S) * qPow(rho, S+1) / factorial(S) ) * 1 / qPow((1-rho), 2);
     }
 
-    return -1;
+    return -2;
+}
+
+double Calculation::W(int S, int K, double lambda, double mu)
+{
+    qDebug() << S << K << lambda << mu;
+
+    if(S == 1)
+    {
+        double rho = lambda / mu;
+
+        if(K == 0) // M | M | 1
+        {
+            if(rho < 1)
+            {
+                return L(S,K,lambda,mu) / lambda;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else // M | M | 1 | K
+        {
+            return -2;
+
+        }
+    }
+    else // M | M | S
+    {
+        return Wq(S, K, lambda, mu) + (1/mu);
+    }
+
+    return -2;
+}
+
+double Calculation::Wq(int S, int K, double lambda, double mu)
+{
+    qDebug() << S << K << lambda << mu;
+
+    if(S == 1)
+    {
+        double rho = lambda / mu;
+
+        if(K == 0) // M | M | 1
+        {
+            if(rho < 1)
+            {
+                return W(S,K,lambda,mu) - (1 / mu) ;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else // M | M | 1 | K
+        {
+            return -2;
+
+        }
+    }
+    else // M | M | S
+    {
+        return Lq(S, K, lambda, mu) / lambda;
+    }
+
+    return -2;
 }
 
 int Calculation::factorial(int x)

@@ -447,7 +447,11 @@ d'attente des clients</string>
      </widget>
     </item>
     <item row="0" column="0">
-     <widget class="QSpinBox" name="SpinBoxFont"/>
+     <widget class="QSpinBox" name="SpinBoxFont">
+      <property name="maximum">
+       <number>1000</number>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

@@ -10,8 +10,9 @@ public:
     Calculation();
 
     static double L(int S, int K, double lambda, double mu);
-
     static double Lq(int S, int K, double lambda, double mu);
+    static double W(int S, int K, double lambda, double mu);
+    static double Wq(int S, int K, double lambda, double mu);
 
 private:
     static int factorial(int x);

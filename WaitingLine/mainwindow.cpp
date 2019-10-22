@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->SpinBoxFont->setValue(65);
+    this->setFont(QFont("Georgia", 14));
     ui->SpinBoxFont->hide();
 
 // init GroupBoxProblem
@@ -98,29 +98,37 @@ void MainWindow::on_ComboBoxQuestion_currentIndexChanged(int index)
 
     if(index == 1 || index == 2)
     {
-        ui->GroupBox12->show();
         ui->GroupBox3->hide();
         ui->GroupBox4->hide();
         ui->GroupBox5->hide();
 
+        ui->GroupBox12->show();
         ui->RadioButtonQueue->click();
     }
 
     if(index == 3)
     {
         ui->GroupBox12->hide();
-        ui->GroupBox3->show();
         ui->GroupBox4->hide();
         ui->GroupBox5->hide();
+
+        if(ui->SpinBoxNbMaxPers->value() == 0)
+        {
+            ui->GroupBox3->show();
+        }
+        else
+        {
+            ui->GroupBox3->hide();
+        }
     }
 
     if(index == 4)
     {
         ui->GroupBox12->hide();
         ui->GroupBox3->hide();
-        ui->GroupBox4->show();
         ui->GroupBox5->hide();
 
+        ui->GroupBox4->show();
         ui->LabelQ4->hide();
         ui->SpinBoxQ4_2->hide();
     }
@@ -130,8 +138,8 @@ void MainWindow::on_ComboBoxQuestion_currentIndexChanged(int index)
         ui->GroupBox12->hide();
         ui->GroupBox3->hide();
         ui->GroupBox4->hide();
-        ui->GroupBox5->show();
 
+        ui->GroupBox5->show();
         ui->LabelQ5->hide();
         ui->SpinBoxQ5_2->hide();
         ui->ComboBoxTimeQ5_2->hide();
@@ -145,53 +153,74 @@ void MainWindow::on_ComboBoxQuestion_currentIndexChanged(int index)
  */
 void MainWindow::update_result()
 {
+    QString Answer = "";
+    double Result;
 
     int S = ui->SpinBoxNbServer->value();
     int K = ui->SpinBoxNbMaxPers->value();
-    double lamdba = convertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
-    double mu = convertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
+    double lamdba = FrequencyConvertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
+    double mu = FrequencyConvertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
 
-    if(ui->ComboBoxQuestion->currentIndex() == 1)
+    if(ui->ComboBoxQuestion->currentIndex() == 1) // Question 1 (L et Lq)
     {
-        if(ui->RadioButtonSystem->isChecked())
+        // Calcul
+        if(ui->RadioButtonSystem->isChecked()) // Dans le système (L)
         {
-            QString Answer = "";
-
-            double Result = Calculation::L(S,K,lamdba, mu);
-
-            if(Result != -1)
-            {
-                Answer.append("Il y aura en moyenne ");
-                Answer.append(QString::number(Result));
-                Answer.append(" client(s) dans la boutique.");
-            }
-            else
-            {
-                Answer.append("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service.");
-            }
-
-            ui->LabelAnswer->setText(Answer);
+            Result = Calculation::L(S,K,lamdba, mu);
         }
-        else
+        else // Dans la queue (Lq)
         {
-            QString Answer = "";
+            Result = Calculation::Lq(S,K,lamdba, mu);
+        }
 
-            double Result = Calculation::Lq(S,K,lamdba, mu);
+        // Affichage du résultat
+        if(Result >= 0)
+        {
+            Answer.append("Il y aura en moyenne ");
+            Answer.append(QString::number(Result));
+            Answer.append(" client(s) dans la queue.");
+        }
 
-            if(Result != -1)
-            {
-                Answer.append("Il y aura en moyenne ");
-                Answer.append(QString::number(Result));
-                Answer.append(" client(s) dans la queue.");
-            }
-            else
-            {
-                Answer.append("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service.");
-            }
+        ui->LabelAnswer->setText(Answer);
+    }
 
-            ui->LabelAnswer->setText(Answer);
+    if(ui->ComboBoxQuestion->currentIndex() == 2) // Question 2 (W et Wq)
+    {
+
+        // Calcul
+        if(ui->RadioButtonSystem->isChecked()) // Dans le système (W)
+        {
+            Result = Calculation::W(S,K,lamdba, mu);
+        }
+        else // Dans la queue (Wq)
+        {
+            Result = Calculation::Wq(S,K,lamdba, mu);
+        }
+
+        // Affichage du résultat
+        if(Result >= 0)
+        {
+            Answer.append("Un client restera en moyenne ");
+            Answer.append(ResultConvertion(Result));
+            Answer.append(" dans la boutique.");
         }
     }
+
+    if(ui->ComboBoxQuestion->currentIndex() == 3) // Question 3
+    {
+
+    }
+
+    if(Result == -1)
+    {
+        Answer.append("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service.");
+    }
+    if(Result == -2)
+    {
+        Answer.append("Nous ne somme pas en capacité de répondre à la question.");
+    }
+
+    ui->LabelAnswer->setText(Answer);
 }
 
 /**
@@ -199,29 +228,29 @@ void MainWindow::update_result()
  * Convertie le temps en secondes
  * @return
  */
-double MainWindow::convertion(double time, int unit)
+double MainWindow::FrequencyConvertion(double frequency, int unit)
 {
     switch (unit) {
     case 0:
-        return time;
+        return frequency;
         break;
     case 1:
-        return time * 60;
+        return frequency / 60;
         break;
     case 2:
-        return time * 60 * 60;
+        return frequency / 60 / 60;
         break;
     case 3:
-        return time * 60 * 60 * 24;
+        return frequency / 60 / 60 / 24;
         break;
     case 4:
-        return time * 60 * 60 * 24 * 7;
+        return frequency / 60 / 60 / 24 / 7;
         break;
     case 5:
-        return time * 60 * 60 * 24 * 30;
+        return frequency / 60 / 60 / 24 / 30;
         break;
     case 6:
-        return time * 60 * 60 * 24 * 365;
+        return frequency / 60 / 60 / 24 / 365;
         break;
     default:
         break;
@@ -230,8 +259,73 @@ double MainWindow::convertion(double time, int unit)
     return -1;
 }
 
+QString MainWindow::ResultConvertion(double resultToConvert)
+{
+    QString ConvertedResult = "";
+
+    // Résultats exactes
+    if((int)resultToConvert == 1) // 1 seconde
+    {
+        ConvertedResult.append( "1 seconde" );
+    }
+    else if((int)resultToConvert == 60) // 1 minute
+    {
+        ConvertedResult.append( "1 minute" );
+    }
+    else if((int)resultToConvert == 3600) // 1 heure
+    {
+        ConvertedResult.append( "1 heure" );
+    }
+    else if((int)resultToConvert == 86400) // 1 jour
+    {
+        ConvertedResult.append( "1 jour" );
+    }
+    else if((int)resultToConvert == 60*60*24*7) // 1 semaine
+    {
+        ConvertedResult.append( "1 semaine" );
+    }
+
+    // Autres résultats
+    else if(resultToConvert < 90) // moins d'1min30
+    {
+        ConvertedResult.append( QString::number(resultToConvert) + " secondes" );
+    }
+    else if(resultToConvert < 90*60) // moins d'1h30
+    {
+        ConvertedResult.append( QString::number(resultToConvert / 60) + " minutes" );
+    }
+    else if(resultToConvert < 60*60*36) // moins de 36 heures
+    {
+        ConvertedResult.append( QString::number(resultToConvert / 60 / 60) + " heures" );
+    }
+    else // plus de 36 heures
+    {
+        ConvertedResult.append( QString::number(resultToConvert / 60 / 60 / 24) + " jours" );
+    }
+
+    return ConvertedResult;
+}
+
+
 void MainWindow::on_SpinBoxFont_valueChanged(int arg1)
 {
     QFontDatabase fdb;
     this->setFont(QFont(fdb.families().at(arg1), 14));
+    qDebug() << QFont(fdb.families().at(arg1));
+}
+
+void MainWindow::on_SpinBoxNbMaxPers_valueChanged(int arg1)
+{
+    if(ui->ComboBoxQuestion->currentIndex() == 3)
+    {
+        if(arg1 == 0)
+        {
+            ui->GroupBox3->show();
+        }
+        else
+        {
+            ui->GroupBox3->hide();
+        }
+    }
+
 }
