@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QMainWindow>
 #include <QStringList>
+#include <QFontDatabase>
 #include "calculation.h"
 
 namespace Ui {
@@ -21,6 +22,8 @@ public:
 private slots:
     void on_ComboBoxQuestion_currentIndexChanged(int index);
     void update_result();
+
+    void on_SpinBoxFont_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

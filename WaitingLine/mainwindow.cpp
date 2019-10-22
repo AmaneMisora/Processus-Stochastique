@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->SpinBoxFont->setValue(65);
+    ui->SpinBoxFont->hide();
 
 // init GroupBoxProblem
 
@@ -155,22 +157,32 @@ void MainWindow::update_result()
         {
             QString Answer = "";
 
-<<<<<<< HEAD
             double Result = Calculation::L(S,K,lamdba, mu);
-
 
             if(Result != -1)
             {
                 Answer.append("Il y aura en moyenne ");
                 Answer.append(QString::number(Result));
                 Answer.append(" client(s) dans la boutique.");
-=======
-            if(lamdba < mu)
+            }
+            else
+            {
+                Answer.append("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service.");
+            }
+
+            ui->LabelAnswer->setText(Answer);
+        }
+        else
+        {
+            QString Answer = "";
+
+            double Result = Calculation::Lq(S,K,lamdba, mu);
+
+            if(Result != -1)
             {
                 Answer.append("Il y aura en moyenne ");
-                Answer.append(QString::number(Calculation::L(S,K,lamdba, mu)));
-                Answer.append(" client(s) dans la file.");
->>>>>>> master
+                Answer.append(QString::number(Result));
+                Answer.append(" client(s) dans la queue.");
             }
             else
             {
@@ -218,5 +230,8 @@ double MainWindow::convertion(double time, int unit)
     return -1;
 }
 
-
-
+void MainWindow::on_SpinBoxFont_valueChanged(int arg1)
+{
+    QFontDatabase fdb;
+    this->setFont(QFont(fdb.families().at(arg1), 14));
+}
