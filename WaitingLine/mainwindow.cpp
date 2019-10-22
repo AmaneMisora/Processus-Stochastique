@@ -86,6 +86,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**
+ * @brief MainWindow::on_ComboBoxQuestion_currentIndexChanged
+ * @param index
+ * Modifie l'interface en fonction de la question sélectionnée
+ */
 void MainWindow::on_ComboBoxQuestion_currentIndexChanged(int index)
 {
     if(index == 0)
@@ -208,7 +213,27 @@ void MainWindow::update_result()
 
     if(ui->ComboBoxQuestion->currentIndex() == 3) // Question 3
     {
+        if(K == 0)
+        {
+            Result = 1;
 
+            for(int j = 0; j <= ui->SpinBoxQ3->value(); j++)
+            {
+                Result -= Calculation::Q(S, K, lamdba, mu, j);
+            }
+        }
+        else
+        {
+            Result = Calculation::Q(S, K, lamdba, mu, K);
+        }
+
+        // Affichage du résultat
+        if(Result >= 0)
+        {
+            Answer.append("Il y aura ");
+            Answer.append(QString::number(Result));
+            Answer.append(" client(s) perdus.");
+        }
     }
 
     if(Result == -1)
@@ -225,7 +250,7 @@ void MainWindow::update_result()
 
 /**
  * @brief MainWindow::convertion
- * Convertie le temps en secondes
+ * Convertie une fréquence en aucunrrance par seconde
  * @return
  */
 double MainWindow::FrequencyConvertion(double frequency, int unit)
@@ -259,6 +284,14 @@ double MainWindow::FrequencyConvertion(double frequency, int unit)
     return -1;
 }
 
+/**
+ * @brief MainWindow::ResultConvertion
+ * @param resultToConvert
+ * @return le resultat convertie
+ * Prend en entrée une valeur temporelle en secondes
+ * Convertie au mieux le temps en entrée pour afficher le résultat
+ * Retourne la concaténation du nombre convertie et de l'unité de temps sous la forme d'un Qstring
+ */
 QString MainWindow::ResultConvertion(double resultToConvert)
 {
     QString ConvertedResult = "";
@@ -306,7 +339,11 @@ QString MainWindow::ResultConvertion(double resultToConvert)
     return ConvertedResult;
 }
 
-
+/**
+ * @brief MainWindow::on_SpinBoxFont_valueChanged
+ * @param arg1
+ * Met à jour l'écriture
+ */
 void MainWindow::on_SpinBoxFont_valueChanged(int arg1)
 {
     QFontDatabase fdb;
@@ -314,6 +351,11 @@ void MainWindow::on_SpinBoxFont_valueChanged(int arg1)
     qDebug() << QFont(fdb.families().at(arg1));
 }
 
+/**
+ * @brief MainWindow::on_SpinBoxNbMaxPers_valueChanged
+ * @param arg1
+ * Met à jour l'interface en fonctio de la valeur de K
+ */
 void MainWindow::on_SpinBoxNbMaxPers_valueChanged(int arg1)
 {
     if(ui->ComboBoxQuestion->currentIndex() == 3)
