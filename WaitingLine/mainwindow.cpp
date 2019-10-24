@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "calculation.h"
+#include "dialogresume.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -354,7 +356,7 @@ void MainWindow::on_SpinBoxFont_valueChanged(int arg1)
 /**
  * @brief MainWindow::on_SpinBoxNbMaxPers_valueChanged
  * @param arg1
- * Met à jour l'interface en fonctio de la valeur de K
+ * Met à jour l'interface en fonction de la valeur de K
  */
 void MainWindow::on_SpinBoxNbMaxPers_valueChanged(int arg1)
 {
@@ -370,4 +372,22 @@ void MainWindow::on_SpinBoxNbMaxPers_valueChanged(int arg1)
         }
     }
 
+}
+
+/**
+ * @brief MainWindow::on_PushButtonGlobalResult_clicked
+ * Appuyer le bouton
+ * et puis afficher un résumé des données
+ */
+void MainWindow::on_PushButtonGlobalResult_clicked()
+{
+    DialogResume dialog;
+
+    int S = ui->SpinBoxNbServer->value();
+    int K = ui->SpinBoxNbMaxPers->value();
+    double lamdba = FrequencyConvertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
+    double mu = FrequencyConvertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
+
+    dialog.Initialization(S,K,lamdba,mu);
+    dialog.exec();
 }
