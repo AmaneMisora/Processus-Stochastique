@@ -168,73 +168,80 @@ void MainWindow::update_result()
     double lamdba = FrequencyConvertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
     double mu = FrequencyConvertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
 
-    if(ui->ComboBoxQuestion->currentIndex() == 1) // Question 1 (L et Lq)
+    if(S != 1 && K != 0 )
     {
-        // Calcul
-        if(ui->RadioButtonSystem->isChecked()) // Dans le système (L)
-        {
-            Result = Calculation::L(S,K,lamdba, mu);
-        }
-        else // Dans la queue (Lq)
-        {
-            Result = Calculation::Lq(S,K,lamdba, mu);
-        }
-
-        // Affichage du résultat
-        if(Result >= 0)
-        {
-            Answer.append("Il y aura en moyenne ");
-            Answer.append(QString::number(Result));
-            Answer.append(" client(s) dans la queue.");
-        }
-
-        ui->LabelAnswer->setText(Answer);
+        Result = -2;
     }
-
-    if(ui->ComboBoxQuestion->currentIndex() == 2) // Question 2 (W et Wq)
+    else
     {
-
-        // Calcul
-        if(ui->RadioButtonSystem->isChecked()) // Dans le système (W)
+        if(ui->ComboBoxQuestion->currentIndex() == 1) // Question 1 (L et Lq)
         {
-            Result = Calculation::W(S,K,lamdba, mu);
-        }
-        else // Dans la queue (Wq)
-        {
-            Result = Calculation::Wq(S,K,lamdba, mu);
-        }
-
-        // Affichage du résultat
-        if(Result >= 0)
-        {
-            Answer.append("Un client restera en moyenne ");
-            Answer.append(ResultConvertion(Result));
-            Answer.append(" dans la boutique.");
-        }
-    }
-
-    if(ui->ComboBoxQuestion->currentIndex() == 3) // Question 3
-    {
-        if(K == 0)
-        {
-            Result = 1;
-
-            for(int j = 0; j <= ui->SpinBoxQ3->value(); j++)
+            // Calcul
+            if(ui->RadioButtonSystem->isChecked()) // Dans le système (L)
             {
-                Result -= Calculation::Q(S, K, lamdba, mu, j);
+                Result = Calculation::L(S,K,lamdba, mu);
+            }
+            else // Dans la queue (Lq)
+            {
+                Result = Calculation::Lq(S,K,lamdba, mu);
+            }
+
+            // Affichage du résultat
+            if(Result >= 0)
+            {
+                Answer.append("Il y aura en moyenne ");
+                Answer.append(QString::number(Result));
+                Answer.append(" client(s) dans la queue.");
+            }
+
+            ui->LabelAnswer->setText(Answer);
+        }
+
+        if(ui->ComboBoxQuestion->currentIndex() == 2) // Question 2 (W et Wq)
+        {
+
+            // Calcul
+            if(ui->RadioButtonSystem->isChecked()) // Dans le système (W)
+            {
+                Result = Calculation::W(S,K,lamdba, mu);
+            }
+            else // Dans la queue (Wq)
+            {
+                Result = Calculation::Wq(S,K,lamdba, mu);
+            }
+
+            // Affichage du résultat
+            if(Result >= 0)
+            {
+                Answer.append("Un client restera en moyenne ");
+                Answer.append(ResultConvertion(Result));
+                Answer.append(" dans la boutique.");
             }
         }
-        else
-        {
-            Result = Calculation::Q(S, K, lamdba, mu, K);
-        }
 
-        // Affichage du résultat
-        if(Result >= 0)
+        if(ui->ComboBoxQuestion->currentIndex() == 3) // Question 3
         {
-            Answer.append("Il y aura ");
-            Answer.append(QString::number(Result));
-            Answer.append(" client(s) perdus.");
+            if(K == 0)
+            {
+                Result = 1;
+
+                for(int j = 0; j <= ui->SpinBoxQ3->value(); j++)
+                {
+                    Result -= Calculation::Q(S, K, lamdba, mu, j);
+                }
+            }
+            else
+            {
+                Result = Calculation::Q(S, K, lamdba, mu, K);
+            }
+
+            // Affichage du résultat
+            if(Result >= 0)
+            {
+                Answer.append("Il y aura ");
+                Answer.append(QString::number(Result));
+                Answer.append(" client(s) perdus.");
+            }
         }
     }
 
