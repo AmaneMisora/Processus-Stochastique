@@ -17,12 +17,15 @@ SOURCES += main.cpp\
     Model/donnee.cpp \
     Model/probleme.cpp \
     Model/solution.cpp \
-    calculation.cpp
+    calculation.cpp \
+    dialogresume.cpp
 
 HEADERS  += mainwindow.h \
     Model/donnee.h \
     Model/probleme.h \
     Model/solution.h \
-    calculation.h
+    calculation.h \
+    dialogresume.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialogresume.ui

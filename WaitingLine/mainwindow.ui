@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>507</height>
+    <width>788</width>
+    <height>662</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -460,8 +460,8 @@ d'attente des clients</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>681</width>
-     <height>21</height>
+     <width>788</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
