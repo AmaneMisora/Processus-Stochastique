@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>788</width>
-    <height>547</height>
+    <height>507</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Gestionnaire de files d'attente</string>
@@ -328,24 +334,21 @@
        <item>
         <widget class="QPushButton" name="PushButtonGlobalResult">
          <property name="text">
-          <string>Afficher un résumé
-des données</string>
+          <string>Afficher un résumé des données</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="PushButtonGrathLenth">
          <property name="text">
-          <string>Analyser le temps
-la longueur de la queue</string>
+          <string>Analyser le temps la longueur de la queue</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="PushButtonGraphTime">
          <property name="text">
-          <string>Analyser le temps
-d'attente des clients</string>
+          <string>Analyser le temps d'attente des clients</string>
          </property>
         </widget>
        </item>

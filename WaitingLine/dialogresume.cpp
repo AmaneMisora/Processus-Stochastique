@@ -27,29 +27,29 @@ DialogResume::~DialogResume()
 void DialogResume::Initialization(int S, int K, double lambda, double mu)
 {
     if(S!= 1 && K != 0) {
+
         //L
-        ui->label_q1_answer->setText(QString("Personne!"));
-        ui->label_q1_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+        ui->label_q1_answer->setText(QString("Pas de solution !"));
+        ui->label_q1_explain->setText(QString("Nous ne savons pas répondre."));
         ui->label_q1_explain->setStyleSheet("color:red;");
         //Lq
-        ui->label_q2_answer->setText(QString("Personne!"));
-        ui->label_q2_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+        ui->label_q2_answer->setText(QString("Pas de solution !"));
+        ui->label_q2_explain->setText(QString("Nous ne savons pas répondre."));
         ui->label_q2_explain->setStyleSheet("color:red;");
         //W
         ui->label_q3_answer->setText("Pas de solution!");
-        ui->label_q3_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+        ui->label_q3_explain->setText(QString("Nous ne savons pas répondre."));
         ui->label_q3_explain->setStyleSheet("color:red;");
         //Wq
-        ui->label_q3_answer->setText("Pas de solution!");
-        ui->label_q3_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
-        ui->label_q3_explain->setStyleSheet("color:red;");
-
+        ui->label_q4_answer->setText("Pas de solution!");
+        ui->label_q4_explain->setText(QString("Nous ne savons pas répondre."));
+        ui->label_q4_explain->setStyleSheet("color:red;");
 
     } else {
         //label_q1(L)
         double L = Calculation::L(S,K,lambda,mu);
         if(L == -1) {
-            ui->label_q1_answer->setText(QString("Personne!"));
+            ui->label_q1_answer->setText(QString("Pas de solution !"));
             ui->label_q1_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
             ui->label_q1_explain->setStyleSheet("color:red;");
 
@@ -62,7 +62,7 @@ void DialogResume::Initialization(int S, int K, double lambda, double mu)
         //label_q2(Lq)
         double Lq = Calculation::Lq(S,K,lambda,mu);
         if(Lq == -1) {
-            ui->label_q2_answer->setText(QString("Personne!"));
+            ui->label_q2_answer->setText(QString("Pas de solution !"));
             ui->label_q2_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
             ui->label_q2_explain->setStyleSheet("color:red;");
         } else if(Lq>0 && Lq <= 1.0){
@@ -73,11 +73,27 @@ void DialogResume::Initialization(int S, int K, double lambda, double mu)
 
         //label_q3(W)
         double W = Calculation::W(S,K,lambda,mu);
-        ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString(" par client"));
+        if(W == -1) {
+            ui->label_q3_answer->setText("Pas de solution !");
+            ui->label_q3_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+            ui->label_q3_explain->setStyleSheet("color:red;");
+        }
+        else
+        {
+            ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString(" par client"));
+        }
 
         //label_q4(Wq)
         double Wq = Calculation::Wq(S,K,lambda,mu);
-        ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString(" par client"));
+        if(Wq == -1) {
+            ui->label_q4_answer->setText("Pas de solution !");
+            ui->label_q4_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+            ui->label_q4_explain->setStyleSheet("color:red;");
+        }
+        else
+        {
+            ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString(" par client"));
+        }
 
     }
 }
