@@ -15,6 +15,7 @@ DialogResume::~DialogResume()
 {
     delete ui;
 }
+
 /**
  * @brief DialogResume::InitializeProblem
  * @param S
@@ -47,7 +48,12 @@ void DialogResume::Initialization(int S, int K, double lambda, double mu)
     } else {
         //label_q1(L)
         double L = Calculation::L(S,K,lambda,mu);
-        if(L>0 && L <= 1.0) {
+        if(L == -1) {
+            ui->label_q1_answer->setText(QString("Personne!"));
+            ui->label_q1_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+            ui->label_q1_explain->setStyleSheet("color:red;");
+
+        } else if(L>0 && L <= 1.0) {
             ui->label_q1_answer->setText(QString::number(L) + QString(" Client"));
         } else {
             ui->label_q1_answer->setText(QString::number(L) + QString(" Clients"));
@@ -55,19 +61,23 @@ void DialogResume::Initialization(int S, int K, double lambda, double mu)
 
         //label_q2(Lq)
         double Lq = Calculation::Lq(S,K,lambda,mu);
-        if(Lq>0 && Lq <= 1.0){
-            ui->label_q2_answer->setText(QString::number(Lq) + QString("Client"));
+        if(Lq == -1) {
+            ui->label_q2_answer->setText(QString("Personne!"));
+            ui->label_q2_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+            ui->label_q2_explain->setStyleSheet("color:red;");
+        } else if(Lq>0 && Lq <= 1.0){
+            ui->label_q2_answer->setText(QString::number(Lq) + QString(" Client"));
         } else {
-            ui->label_q2_answer->setText(QString::number(Lq) + QString("Clients"));
+            ui->label_q2_answer->setText(QString::number(Lq) + QString(" Clients"));
         }
 
         //label_q3(W)
         double W = Calculation::W(S,K,lambda,mu);
-        ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString("par client"));
+        ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString(" par client"));
 
         //label_q4(Wq)
         double Wq = Calculation::Wq(S,K,lambda,mu);
-        ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString("par client"));
+        ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString(" par client"));
 
     }
 }

@@ -380,7 +380,6 @@ void MainWindow::on_SpinBoxNbMaxPers_valueChanged(int arg1)
             ui->GroupBox3->hide();
         }
     }
-
 }
 
 /**
