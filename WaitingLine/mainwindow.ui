@@ -10,12 +10,6 @@
     <height>662</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
   <property name="windowTitle">
    <string>Gestionnaire de files d'attente</string>
   </property>
@@ -328,21 +322,24 @@
        <item>
         <widget class="QPushButton" name="PushButtonGlobalResult">
          <property name="text">
-          <string>Afficher un résumé des données</string>
+          <string>Afficher un résumé
+des données</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="PushButtonGrathLenth">
          <property name="text">
-          <string>Analyser le temps la longueur de la queue</string>
+          <string>Analyser le temps
+la longueur de la queue</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="PushButtonGraphTime">
          <property name="text">
-          <string>Analyser le temps d'attente des clients</string>
+          <string>Analyser le temps
+d'attente des clients</string>
          </property>
         </widget>
        </item>
@@ -364,9 +361,6 @@
        </item>
        <item row="2" column="1">
         <widget class="QDoubleSpinBox" name="DoubleSpinBoxFrequenceArrivee">
-         <property name="suffix">
-          <string> client(s)</string>
-         </property>
          <property name="decimals">
           <number>1</number>
          </property>
@@ -388,7 +382,7 @@
        <item row="3" column="2">
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>par</string>
+          <string>client(s) par</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -404,9 +398,6 @@
        </item>
        <item row="3" column="1">
         <widget class="QDoubleSpinBox" name="DoubleSpinBoxFrequenceService">
-         <property name="suffix">
-          <string> client(s)</string>
-         </property>
          <property name="decimals">
           <number>1</number>
          </property>
@@ -428,7 +419,7 @@
        <item row="2" column="2">
         <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>par</string>
+          <string>client(s) par</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -469,8 +460,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>681</width>
-     <height>21</height>
+     <width>788</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
