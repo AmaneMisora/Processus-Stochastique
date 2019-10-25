@@ -381,6 +381,7 @@ QString MainWindow::ResultConvertion(double resultToConvert)
     return ConvertedResult;
 }
 
+
 /**
  * @brief MainWindow::on_SpinBoxFont_valueChanged
  * @param arg1
@@ -431,3 +432,15 @@ void MainWindow::on_PushButtonGlobalResult_clicked()
     dialog.Initialization(S,K,lamdba,mu);
     dialog.exec();
 }
+
+
+/**
+ * @brief MainWindow::SolutionQuestionFour
+ * Calculer la question :
+ * Quelle est la probilité d'avoir ce nombre de clients dans la file?
+ */
+QString MainWindow::SolutionQuestionFour(int n, int max_per, int fre_arr_cli, int fre_ser_cli)
+{
+
+}
+

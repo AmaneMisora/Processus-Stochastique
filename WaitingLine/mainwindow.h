@@ -32,6 +32,7 @@ private:
     Ui::MainWindow *ui;
     double FrequencyConvertion(double frequency, int unit);
     QString ResultConvertion(double resultToConvert);
+    QString SolutionQuestionFour(int n, int max_per, int fre_arr_cli, int fre_ser_cli);
 };
 
 #endif // MAINWINDOW_H
