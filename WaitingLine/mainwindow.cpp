@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setFont(QFont("Calibri", 14));
+    this->setFont(QFont("Georgia", 14));
     ui->SpinBoxFont->hide();
 
 // init GroupBoxProblem
@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->ComboBoxQuestion->addItem("Combien de client seront perdus?");
     ui->ComboBoxQuestion->addItem("Quelle est la probilité d'avoir ce nombre de clients dans la file?");
     ui->ComboBoxQuestion->addItem("Quelle est la probilité qu'un client attende ce temps là?");
+    ui->ComboBoxQuestion->setFont(QFont("Georgia", 14));
 
     // ComboBox (Q4&5)
     QStringList Q45ItemsStringList;

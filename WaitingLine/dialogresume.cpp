@@ -6,6 +6,8 @@ DialogResume::DialogResume(QWidget *parent) :
     ui(new Ui::DialogResume)
 {
     ui->setupUi(this);
+    this->setFont(QFont("Georgia", 14));
+    ui->label_title->setFont(QFont("Georgia", 16, QFont::Bold));
 
 }
 
@@ -56,7 +58,7 @@ void DialogResume::Initialization(int S, int K, double lambda, double mu)
         ui->label_q3_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
         ui->label_q3_explain->setStyleSheet("color:red;");
     } else {
-        ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString("\n/par client"));
+        ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString(" par client"));
     }
 
 
@@ -68,7 +70,7 @@ void DialogResume::Initialization(int S, int K, double lambda, double mu)
         ui->label_q4_explain->setStyleSheet("color:red;");
 
     } else {
-        ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString("\n/par client"));
+        ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString(" par client"));
     }
 
 }
