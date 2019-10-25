@@ -6,6 +6,8 @@ DialogResume::DialogResume(QWidget *parent) :
     ui(new Ui::DialogResume)
 {
     ui->setupUi(this);
+    this->setFont(QFont("Georgia", 14));
+    ui->label_title->setFont(QFont("Georgia", 16, QFont::Bold));
 
 }
 
@@ -61,11 +63,11 @@ void DialogResume::Initialization(int S, int K, double lambda, double mu)
 
         //label_q3(W)
         double W = Calculation::W(S,K,lambda,mu);
-        ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString("\n/par client"));
+        ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString("par client"));
 
         //label_q4(Wq)
         double Wq = Calculation::Wq(S,K,lambda,mu);
-        ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString("\n/par client"));
+        ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString("par client"));
 
     }
 }

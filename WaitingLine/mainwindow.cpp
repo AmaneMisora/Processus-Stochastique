@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 // init GroupBoxProblem
 
     // Question
+    ui->ComboBoxQuestion->setFont(QFont("Georgia", 14));
     ui->ComboBoxQuestion->addItem(" ");
     ui->ComboBoxQuestion->addItem("Combien de client en moyenne seront présents?");
     ui->ComboBoxQuestion->addItem("Combien de temps en moyenne le client sera présent?");
