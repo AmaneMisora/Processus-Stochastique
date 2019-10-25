@@ -5,7 +5,6 @@
 #include <QMainWindow>
 #include <QStringList>
 #include <QFontDatabase>
-#include "calculation.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +25,8 @@ private slots:
     void on_SpinBoxFont_valueChanged(int arg1);
 
     void on_SpinBoxNbMaxPers_valueChanged(int arg1);
+
+    void on_PushButtonGlobalResult_clicked();
 
 private:
     Ui::MainWindow *ui;
