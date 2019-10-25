@@ -13,7 +13,7 @@ class DialogResume : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogResume(QWidget *parent = nullptr);
+    explicit DialogResume(QWidget *parent = NULL);
     ~DialogResume();
 
     void Initialization(int S, int K, double lambda, double mu);

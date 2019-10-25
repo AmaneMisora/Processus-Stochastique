@@ -51,11 +51,25 @@ void DialogResume::Initialization(int S, int K, double lambda, double mu)
 
     //label_q3(W)
     double W = Calculation::W(S,K,lambda,mu);
-    ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString("\n/par client"));
+    if(W <= 0.0 ) {
+        ui->label_q3_answer->setText("Pas de solution!");
+        ui->label_q3_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+        ui->label_q3_explain->setStyleSheet("color:red;");
+    } else {
+        ui->label_q3_answer->setText(this->MofidyTimeResult(W) + QString("\n/par client"));
+    }
+
 
     //label_q4(Wq)
     double Wq = Calculation::Wq(S,K,lambda,mu);
-     ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString("\n/par client"));
+    if(Wq <= 0.0) {
+        ui->label_q4_answer->setText("Pas de solution!");
+        ui->label_q4_explain->setText(QString("Il y aura blocage de la queue, le taux d'arrivée des clients est supérieur à la vitesse de service."));
+        ui->label_q4_explain->setStyleSheet("color:red;");
+
+    } else {
+        ui->label_q4_answer->setText(this->MofidyTimeResult(Wq) + QString("\n/par client"));
+    }
 
 }
 
