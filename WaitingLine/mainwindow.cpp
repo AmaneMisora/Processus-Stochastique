@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setFont(QFont("Georgia", 14));
+    this->setFont(QFont("Calibri", 14));
     ui->SpinBoxFont->hide();
 
 // init GroupBoxProblem
@@ -34,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     TimeStringList.append("heure");
     TimeStringList.append("jour");
     TimeStringList.append("semaine");
-    TimeStringList.append("moi");
-    TimeStringList.append("année");
+    TimeStringList.append("mois");
+    TimeStringList.append("an");
     ui->ComboBoxFrequenceArrivee->addItems(TimeStringList);
     ui->ComboBoxFrequenceArrivee->setCurrentIndex(2);
     ui->ComboBoxFrequenceService->addItems(TimeStringList);
@@ -154,7 +154,8 @@ void MainWindow::on_ComboBoxQuestion_currentIndexChanged(int index)
 /**
  * @brief MainWindow::update_result
  * Lance le calcul en fonction de la question sélectionnée
- *
+ * Si une fonction renvoie -1, on l'interprète comme une file infinie (ex : rho > 1)
+ * Si une fonction renvoie -2, on l'interprète comme un problème inconnu (ex : file de type M | M | S | K)
  */
 void MainWindow::update_result()
 {
@@ -166,58 +167,76 @@ void MainWindow::update_result()
     double lamdba = FrequencyConvertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
     double mu = FrequencyConvertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
 
+    // Cas ou le problème est une file de type M | M | S | K
     if(S != 1 && K != 0 )
     {
         Result = -2;
     }
     else
     {
-        if(ui->ComboBoxQuestion->currentIndex() == 1) // Question 1 (L et Lq)
+        // Question 1 (L et Lq)
+        if(ui->ComboBoxQuestion->currentIndex() == 1)
         {
             // Calcul
             if(ui->RadioButtonSystem->isChecked()) // Dans le système (L)
             {
                 Result = Calculation::L(S,K,lamdba, mu);
+
+                // Affichage du résultat
+                if(Result >= 0)
+                {
+                    Answer.append("Il y aura en moyenne ");
+                    Answer.append(QString::number(Result));
+                    Answer.append(" client(s) dans la boutique.");
+                }
             }
             else // Dans la queue (Lq)
             {
                 Result = Calculation::Lq(S,K,lamdba, mu);
-            }
 
-            // Affichage du résultat
-            if(Result >= 0)
-            {
-                Answer.append("Il y aura en moyenne ");
-                Answer.append(QString::number(Result));
-                Answer.append(" client(s) dans la queue.");
+                // Affichage du résultat
+                if(Result >= 0)
+                {
+                    Answer.append("Il y aura en moyenne ");
+                    Answer.append(QString::number(Result));
+                    Answer.append(" client(s) dans la queue.");
+                }
             }
-
-            ui->LabelAnswer->setText(Answer);
         }
 
-        if(ui->ComboBoxQuestion->currentIndex() == 2) // Question 2 (W et Wq)
+        // Question 2 (W et Wq)
+        if(ui->ComboBoxQuestion->currentIndex() == 2)
         {
 
             // Calcul
             if(ui->RadioButtonSystem->isChecked()) // Dans le système (W)
             {
                 Result = Calculation::W(S,K,lamdba, mu);
+
+                // Affichage du résultat
+                if(Result >= 0)
+                {
+                    Answer.append("Un client restera en moyenne ");
+                    Answer.append(ResultConvertion(Result));
+                    Answer.append(" dans la boutique.");
+                }
             }
             else // Dans la queue (Wq)
             {
                 Result = Calculation::Wq(S,K,lamdba, mu);
-            }
 
-            // Affichage du résultat
-            if(Result >= 0)
-            {
-                Answer.append("Un client restera en moyenne ");
-                Answer.append(ResultConvertion(Result));
-                Answer.append(" dans la boutique.");
+                // Affichage du résultat
+                if(Result >= 0)
+                {
+                    Answer.append("Un client restera en moyenne ");
+                    Answer.append(ResultConvertion(Result));
+                    Answer.append(" dans la queue.");
+                }
             }
         }
 
-        if(ui->ComboBoxQuestion->currentIndex() == 3) // Question 3
+        // Question 3
+        if(ui->ComboBoxQuestion->currentIndex() == 3)
         {
             if(K == 0)
             {
@@ -241,6 +260,19 @@ void MainWindow::update_result()
                 Answer.append(" client(s) perdus.");
             }
         }
+
+        // Question 4
+        if(ui->ComboBoxQuestion->currentIndex() == 4)
+        {
+
+        }
+
+        // Question 5
+        if(ui->ComboBoxQuestion->currentIndex() == 5)
+        {
+
+        }
+
     }
 
     if(Result == -1)
