@@ -277,3 +277,66 @@ int Calculation::factorial(int x)
         return x * factorial(x - 1);
     }
 }
+
+/**
+ * @brief Calculation::P
+ * @param S
+ * @param K
+ * @param lambda
+ * @param mu
+ * @param t
+ * @return
+ * Durée de séjour dans le système
+ */
+double Calculation::P(int S, int K, double lambda, double mu, int t)
+{
+    double q0;
+    double rho;
+    if(S == 1) {
+        rho = lambda / mu;
+        q0 = Q(S,K,lambda,mu,0);
+    } else {
+        rho = lambda / (mu * S);
+        q0 = Q(S,K,lambda,mu,0);
+    }
+
+    double right_1_up = 1 - (qExp(0-(mu*t*(S-1-rho*S))));
+    double right_1_down = S - 1 - rho*S;
+    double right_2 = (q0*qPow(rho*S, 2)) / (factorial(S)* (1 - rho));
+    double p = qExp(0 - mu*t) * (1+right_2 * (right_1_up/right_1_down));
+    return p;
+}
+
+/**
+ * @brief Calculation::Pq
+ * @param S
+ * @param K
+ * @param lambda
+ * @param mu
+ * @param t
+ * @return
+ * Durée d’attente sans service
+ */
+double Calculation::Pq(int S, int K, double lambda, double mu, int t)
+{
+    double q0;
+    double rho;
+    if(S == 1) {
+        rho = lambda / mu;
+        q0 = Q(S,K,lambda,mu,0);
+    } else {
+        rho = lambda / (mu * S);
+        q0 = Q(S,K,lambda,mu,0);
+    }
+    double Pq0;
+    Pq0 = (q0 * qPow(rho*S, S)) / (factorial(S) * (1 - rho));
+    if(t == 0.0) {
+        return  Pq0;
+    }
+    double Pqt = qExp(0 - S*mu*t*(1 - rho) * Pq0);
+    return Pqt;
+}
+
+
+
+
