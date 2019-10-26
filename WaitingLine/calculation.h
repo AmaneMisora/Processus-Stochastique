@@ -14,6 +14,8 @@ public:
     static double W(int S, int K, double lambda, double mu);
     static double Wq(int S, int K, double lambda, double mu);
     static double Q(int S, int K, double lambda, double mu, int j);
+    static double P(int S, int K, double lambda, double mu, int t);
+    static double Pq(int S, int K, double lambda, double mu, int t);
 
 private:
     static int factorial(int x);
