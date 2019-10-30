@@ -228,7 +228,7 @@ void MainWindow::update_result()
 
                 for(int j = 0; j <= ui->SpinBoxQ3->value(); j++)
                 {
-                    Result -= Calculation::Q(S, K, lamdba, mu, j);
+                    Result = Result - Calculation::Q(S, K, lamdba, mu, j);
                 }
             }
             else
@@ -239,9 +239,8 @@ void MainWindow::update_result()
             // Affichage du résultat
             if(Result >= 0)
             {
-                Answer.append("Il y aura ");
-                Answer.append(QString::number(Result));
-                Answer.append(" client(s) perdus.");
+                Answer.append(QString::number(Result * 100));
+                Answer.append(" % des clients seront perdus.");
             }
         }
     }
