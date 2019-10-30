@@ -170,14 +170,14 @@ void MainWindow::update_result()
     double lamdba = FrequencyConvertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
     double mu = FrequencyConvertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
 
-
-    // Question 1 (L et Lq)
     if(S != 1 && K != 0 )
     {
         Result = -2;
     }
     else
     {
+
+// Question 1 (L et Lq)
         if(ui->ComboBoxQuestion->currentIndex() == 1)
         {
             // Calcul
@@ -202,7 +202,7 @@ void MainWindow::update_result()
         }
 
 
-        // Question 2 (W et Wq)
+// Question 2 (W et Wq)
         if(ui->ComboBoxQuestion->currentIndex() == 2)
         {
 
@@ -226,7 +226,7 @@ void MainWindow::update_result()
         }
 
 
-        // Question 3 (Q)
+// Question 3 (Q)
         if(ui->ComboBoxQuestion->currentIndex() == 3)
         {
             if(K == 0)
@@ -252,11 +252,32 @@ void MainWindow::update_result()
         }
 
 
-        // Question 5 (P)
+// Question 4 (Qj)
+        if(ui->ComboBoxQuestion->currentIndex() == 4)
+        {
+            if(ui->ComboBoxQ4->currentIndex() == 0) // plus de
+            {
+
+            }
+            else if(ui->ComboBoxQ4->currentIndex() == 1) // moins de
+            {
+
+            }
+            else if(ui->ComboBoxQ4->currentIndex() == 2) // entre
+            {
+
+            }
+            else
+            {
+                Result = -2;
+            }
+
+        }
+
+
+// Question 5 (P)
         if(ui->ComboBoxQuestion->currentIndex() == 5)
         {
-
-
             if(ui->ComboBoxQ5->currentIndex() == 0) // plus de
             {
                 double t = TimeConvertion(ui->SpinBoxQ5->value(), ui->ComboBoxTimeQ5->currentIndex());
