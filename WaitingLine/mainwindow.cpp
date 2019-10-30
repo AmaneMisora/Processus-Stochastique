@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->ComboBoxQuestion->addItem("Combien de client en moyenne seront présents?");
     ui->ComboBoxQuestion->addItem("Combien de temps en moyenne le client sera présent?");
     ui->ComboBoxQuestion->addItem("Combien de client seront perdus?");
-    ui->ComboBoxQuestion->addItem("Quelle est la probilité d'avoir ce nombre de clients dans la file?");
+    ui->ComboBoxQuestion->addItem("Quelle est la probilité d'avoir ce nombre de clients dans la boutique?");
     ui->ComboBoxQuestion->addItem("Quelle est la probilité qu'un client attende ce temps là?");
 
     // ComboBox (Q4&5)
@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     TimeStringList.append("heure");
     TimeStringList.append("jour");
     TimeStringList.append("semaine");
-    TimeStringList.append("moi");
+    TimeStringList.append("mois");
     TimeStringList.append("année");
     ui->ComboBoxFrequenceArrivee->addItems(TimeStringList);
     ui->ComboBoxFrequenceArrivee->setCurrentIndex(2);
@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->ComboBoxFrequenceService->setCurrentIndex(2);
     ui->ComboBoxTimeQ5->addItems(TimeStringList);
     ui->ComboBoxTimeQ5->setCurrentIndex(2);
+    ui->ComboBoxTimeQ5_2->addItems(TimeStringList);
+    ui->ComboBoxTimeQ5_2->setCurrentIndex(2);
 
     // GroupBox
     ui->GroupBox3->hide();
@@ -157,7 +159,6 @@ void MainWindow::on_ComboBoxQuestion_currentIndexChanged(int index)
 /**
  * @brief MainWindow::update_result
  * Lance le calcul en fonction de la question sélectionnée
- *
  */
 void MainWindow::update_result()
 {
@@ -169,13 +170,15 @@ void MainWindow::update_result()
     double lamdba = FrequencyConvertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
     double mu = FrequencyConvertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
 
+
+    // Question 1 (L et Lq)
     if(S != 1 && K != 0 )
     {
         Result = -2;
     }
     else
     {
-        if(ui->ComboBoxQuestion->currentIndex() == 1) // Question 1 (L et Lq)
+        if(ui->ComboBoxQuestion->currentIndex() == 1)
         {
             // Calcul
             if(ui->RadioButtonSystem->isChecked()) // Dans le système (L)
@@ -198,7 +201,9 @@ void MainWindow::update_result()
             ui->LabelAnswer->setText(Answer);
         }
 
-        if(ui->ComboBoxQuestion->currentIndex() == 2) // Question 2 (W et Wq)
+
+        // Question 2 (W et Wq)
+        if(ui->ComboBoxQuestion->currentIndex() == 2)
         {
 
             // Calcul
@@ -220,7 +225,9 @@ void MainWindow::update_result()
             }
         }
 
-        if(ui->ComboBoxQuestion->currentIndex() == 3) // Question 3
+
+        // Question 3 (Q)
+        if(ui->ComboBoxQuestion->currentIndex() == 3)
         {
             if(K == 0)
             {
@@ -243,6 +250,66 @@ void MainWindow::update_result()
                 Answer.append(" % des clients seront perdus.");
             }
         }
+
+
+        // Question 5 (P)
+        if(ui->ComboBoxQuestion->currentIndex() == 5)
+        {
+
+
+            if(ui->ComboBoxQ5->currentIndex() == 0) // plus de
+            {
+                double t = TimeConvertion(ui->SpinBoxQ5->value(), ui->ComboBoxTimeQ5->currentIndex());
+
+                Result = Calculation::P(S, K, lamdba, mu, t);
+
+                // Affichage du résultat
+                if(Result >= 0)
+                {
+                    Answer.append("Il y a ");
+                    Answer.append(QString::number(Result * 100));
+                    Answer.append("% de chances pour que le client attende plus de ");
+                    Answer.append(ResultConvertion(t));
+                }
+            }
+            else if(ui->ComboBoxQ5->currentIndex() == 1) // moins de
+            {
+                double t = TimeConvertion(ui->SpinBoxQ5->value(), ui->ComboBoxTimeQ5->currentIndex());
+
+                Result = 1 - Calculation::P(S, K, lamdba, mu, t);
+
+                // Affichage du résultat
+                if(Result >= 0)
+                {
+                    Answer.append("Il y a ");
+                    Answer.append(QString::number(Result * 100));
+                    Answer.append("% de chances pour que le client attende moins de ");
+                    Answer.append(ResultConvertion(t));
+                }
+            }
+            else if(ui->ComboBoxQ5->currentIndex() == 2) // entre
+            {
+                double t1 = TimeConvertion(ui->SpinBoxQ5->value(), ui->ComboBoxTimeQ5->currentIndex());
+                double t2 = TimeConvertion(ui->SpinBoxQ5_2->value(), ui->ComboBoxTimeQ5_2->currentIndex());
+
+                Result = Calculation::P(S, K, lamdba, mu, t1) - Calculation::P(S, K, lamdba, mu, t2);
+
+                // Affichage du résultat
+                if(Result >= 0)
+                {
+                    Answer.append("Il y a ");
+                    Answer.append(QString::number(Result * 100));
+                    Answer.append("% de chances pour que le client attende entre ");
+                    Answer.append(ResultConvertion(t1));
+                    Answer.append(" et ");
+                    Answer.append(ResultConvertion(t2));
+                }
+            }
+            else
+            {
+                Result = -2;
+            }
+        }
     }
 
     if(Result == -1)
@@ -259,7 +326,7 @@ void MainWindow::update_result()
 
 /**
  * @brief MainWindow::convertion
- * Convertie une fréquence en aucunrrance par seconde
+ * Convertie une fréquence en nombre d'aucunrrances par seconde
  * @return
  */
 double MainWindow::FrequencyConvertion(double frequency, int unit)
@@ -285,6 +352,43 @@ double MainWindow::FrequencyConvertion(double frequency, int unit)
         break;
     case 6:
         return frequency / 60 / 60 / 24 / 365;
+        break;
+    default:
+        break;
+    }
+
+    return -1;
+}
+
+
+/**
+ * @brief MainWindow::convertion
+ * Convertie une durée en une durée en seconde
+ * @return
+ */
+double MainWindow::TimeConvertion(double frequency, int unit)
+{
+    switch (unit) {
+    case 0:
+        return frequency;
+        break;
+    case 1:
+        return frequency * 60;
+        break;
+    case 2:
+        return frequency * 60 * 60;
+        break;
+    case 3:
+        return frequency * 60 * 60 * 24;
+        break;
+    case 4:
+        return frequency * 60 * 60 * 24 * 7;
+        break;
+    case 5:
+        return frequency * 60 * 60 * 24 * 30;
+        break;
+    case 6:
+        return frequency * 60 * 60 * 24 * 365;
         break;
     default:
         break;
@@ -399,14 +503,18 @@ void MainWindow::on_PushButtonGlobalResult_clicked()
     dialog.exec();
 }
 
-
-/**
- * @brief MainWindow::SolutionQuestionFour
- * Calculer la question :
- * Quelle est la probilité d'avoir ce nombre de clients dans la file?
- */
-QString MainWindow::SolutionQuestionFour(int n, int max_per, int fre_arr_cli, int fre_ser_cli)
+void MainWindow::on_ComboBoxQ5_currentIndexChanged(int index)
 {
-
+    if(index == 2)
+    {
+        ui->LabelQ5->show();
+        ui->SpinBoxQ5_2->show();
+        ui->ComboBoxTimeQ5_2->show();
+    }
+    else
+    {
+        ui->LabelQ5->hide();
+        ui->SpinBoxQ5_2->hide();
+        ui->ComboBoxTimeQ5_2->hide();
+    }
 }
-
