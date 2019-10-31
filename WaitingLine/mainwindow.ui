@@ -341,7 +341,7 @@
        <item>
         <widget class="QPushButton" name="PushButtonGrathLenth">
          <property name="text">
-          <string>Analyser le temps la longueur de la queue</string>
+          <string>Analyser la longueur de la queue</string>
          </property>
         </widget>
        </item>

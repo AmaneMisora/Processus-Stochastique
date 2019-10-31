@@ -307,7 +307,15 @@ double Calculation::P(int S, int K, double lambda, double mu, int t)
     {
         if(K == 0) //M | M | 1
         {
-            p = qExp(- mu * (1-rho) * t);
+            if(rho < 1)
+            {
+                p = qExp(- mu * (1-rho) * t);
+            }
+            else
+            {
+                // Il y aura bloquage
+                p = -1;
+            }
         }
         else // M | M | 1 | K
         {
@@ -318,14 +326,14 @@ double Calculation::P(int S, int K, double lambda, double mu, int t)
     }
     else
     {
-        if(K == 0) // M | M | S | K (On ne sais pas faire)
+        if(K == 0) // M | M | S |
         {
             double right_1_up = 1 - (qExp(0-(mu*t*(S-1-rho*S))));
             double right_1_down = S - 1 - rho*S;
             double right_2 = (q0*qPow(rho*S, 2)) / (factorial(S)* (1 - rho));
             p = qExp(0 - mu*t) * (1+right_2 * (right_1_up/right_1_down));
         }
-        else // M | M | S |
+        else // M | M | S | K (On ne sais pas faire)
         {
             p = -2;
         }
