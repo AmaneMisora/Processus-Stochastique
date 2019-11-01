@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "calculation.h"
+#include "dialogresume.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -269,6 +271,7 @@ void MainWindow::update_result()
             {
                 Result = -2;
             }
+
         }
 
 
@@ -535,10 +538,4 @@ void MainWindow::on_ComboBoxQ5_currentIndexChanged(int index)
         ui->SpinBoxQ5_2->hide();
         ui->ComboBoxTimeQ5_2->hide();
     }
-}
-
-void MainWindow::on_PushButtonGraphTime_clicked()
-{
-    DialogGraphTime *dialog = new DialogGraphTime();
-    //dialog->show();
 }
