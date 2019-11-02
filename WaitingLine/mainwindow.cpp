@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "calculation.h"
-#include "dialogresume.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -538,4 +536,18 @@ void MainWindow::on_ComboBoxQ5_currentIndexChanged(int index)
         ui->SpinBoxQ5_2->hide();
         ui->ComboBoxTimeQ5_2->hide();
     }
+}
+
+void MainWindow::on_PushButtonGraphTime_clicked()
+{
+    DialogGraphTime dialog;
+
+    int S = ui->SpinBoxNbServer->value();
+    int K = ui->SpinBoxNbMaxPers->value();
+    double lamdba = FrequencyConvertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
+    double mu = FrequencyConvertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
+
+    dialog.Init(S,K,lamdba,mu);
+
+    dialog.exec();
 }

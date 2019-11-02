@@ -18,14 +18,17 @@ SOURCES += main.cpp\
     Model/probleme.cpp \
     Model/solution.cpp \
     calculation.cpp \
-    dialogresume.cpp
+    dialogresume.cpp \
+    dialoggraphtime.cpp
 
 HEADERS  += mainwindow.h \
     Model/donnee.h \
     Model/probleme.h \
     Model/solution.h \
     calculation.h \
-    dialogresume.h
+    dialogresume.h \
+    dialoggraphtime.h
 
 FORMS    += mainwindow.ui \
-    dialogresume.ui
+    dialogresume.ui \
+    dialoggraphtime.ui
