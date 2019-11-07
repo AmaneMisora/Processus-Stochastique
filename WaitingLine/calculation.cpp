@@ -285,12 +285,14 @@ int Calculation::factorial(int x)
  * @param lambda
  * @param mu
  * @param t
- * @return
- * Durée de séjour dans le système
+ * @return La probabilité que le temps d'attente dans le système soit supérieur à t
  */
 double Calculation::P(int S, int K, double lambda, double mu, int t)
 {
     double q0;
+    double p;
+
+    // Calcul de rho
     double rho;
     if(S == 1) {
         rho = lambda / mu;
@@ -300,10 +302,43 @@ double Calculation::P(int S, int K, double lambda, double mu, int t)
         q0 = Q(S,K,lambda,mu,0);
     }
 
-    double right_1_up = 1 - (qExp(0-(mu*t*(S-1-rho*S))));
-    double right_1_down = S - 1 - rho*S;
-    double right_2 = (q0*qPow(rho*S, 2)) / (factorial(S)* (1 - rho));
-    double p = qExp(0 - mu*t) * (1+right_2 * (right_1_up/right_1_down));
+    // Calcul de P selon le type de queue
+    if(S == 1)
+    {
+        if(K == 0) //M | M | 1
+        {
+            if(rho < 1)
+            {
+                p = qExp(- mu * (1-rho) * t);
+            }
+            else
+            {
+                // Il y aura bloquage
+                p = -1;
+            }
+        }
+        else // M | M | 1 | K
+        {
+            // J'ai pas trouvé la formule
+            p = -2;
+        }
+
+    }
+    else
+    {
+        if(K == 0) // M | M | S |
+        {
+            double right_1_up = 1 - (qExp(0-(mu*t*(S-1-rho*S))));
+            double right_1_down = S - 1 - rho*S;
+            double right_2 = (q0*qPow(rho*S, 2)) / (factorial(S)* (1 - rho));
+            p = qExp(0 - mu*t) * (1+right_2 * (right_1_up/right_1_down));
+        }
+        else // M | M | S | K (On ne sais pas faire)
+        {
+            p = -2;
+        }
+    }
+
     return p;
 }
 

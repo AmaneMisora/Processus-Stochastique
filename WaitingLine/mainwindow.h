@@ -5,6 +5,9 @@
 #include <QMainWindow>
 #include <QStringList>
 #include <QFontDatabase>
+#include "calculation.h"
+#include "dialogresume.h"
+#include "dialoggraphtime.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,9 +31,14 @@ private slots:
 
     void on_PushButtonGlobalResult_clicked();
 
+    void on_ComboBoxQ5_currentIndexChanged(int index);
+
+    void on_PushButtonGraphTime_clicked();
+
 private:
     Ui::MainWindow *ui;
     double FrequencyConvertion(double frequency, int unit);
+    double TimeConvertion(double frequency, int unit);
     QString ResultConvertion(double resultToConvert);
     QString SolutionQuestionFour(int n, int max_per, int fre_arr_cli, int fre_ser_cli);
 };

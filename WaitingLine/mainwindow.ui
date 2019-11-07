@@ -361,43 +361,6 @@
        <string>Données</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="LabelNbServer">
-         <property name="text">
-          <string>Nombre de serveurs : </string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QDoubleSpinBox" name="DoubleSpinBoxFrequenceArrivee">
-         <property name="decimals">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <double>1000.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="LabelFrequenceArrivee">
-         <property name="text">
-          <string>Fréquence d'arrivée des clients :</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QComboBox" name="ComboBoxFrequenceArrivee"/>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>client(s) par</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="LabelNbMaxPers">
          <property name="text">
@@ -415,13 +378,13 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
-        <widget class="QComboBox" name="ComboBoxFrequenceService"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="LabelFrequenceService">
-         <property name="text">
-          <string>Fréquence de service des clients :</string>
+       <item row="2" column="1">
+        <widget class="QDoubleSpinBox" name="DoubleSpinBoxFrequenceArrivee">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <double>1000.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -439,6 +402,43 @@
         <widget class="QSpinBox" name="SpinBoxNbMaxPers">
          <property name="specialValueText">
           <string>Aucune limite</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>client(s) par</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QComboBox" name="ComboBoxFrequenceArrivee"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="LabelFrequenceArrivee">
+         <property name="text">
+          <string>Fréquence d'arrivée des clients :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="LabelFrequenceService">
+         <property name="text">
+          <string>Fréquence de service des clients :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QComboBox" name="ComboBoxFrequenceService"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="LabelNbServer">
+         <property name="text">
+          <string>Nombre de serveurs : </string>
          </property>
         </widget>
        </item>
@@ -503,7 +503,6 @@
   <tabstop>ComboBoxTimeQ5</tabstop>
   <tabstop>SpinBoxQ5_2</tabstop>
   <tabstop>ComboBoxTimeQ5_2</tabstop>
-  <tabstop>PushButtonGlobalResult</tabstop>
   <tabstop>PushButtonGrathLenth</tabstop>
   <tabstop>PushButtonGraphTime</tabstop>
  </tabstops>

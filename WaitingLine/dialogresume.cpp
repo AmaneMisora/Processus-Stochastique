@@ -8,7 +8,13 @@ DialogResume::DialogResume(QWidget *parent) :
     ui->setupUi(this);
     this->setFont(QFont("Georgia", 14));
     ui->label_title->setFont(QFont("Georgia", 16, QFont::Bold));
+    this->layout()->setSizeConstraint( QLayout::SetFixedSize );
 
+    // Explains
+    ui->label_q1_explain->setFont(QFont("Georgia", 12));
+    ui->label_q2_explain->setFont(QFont("Georgia", 12));
+    ui->label_q3_explain->setFont(QFont("Georgia", 12));
+    ui->label_q4_explain->setFont(QFont("Georgia", 12));
 }
 
 DialogResume::~DialogResume()
