@@ -222,7 +222,7 @@ double Calculation::Q(int S, int K, double lambda, double mu, int j)
         }
         else
         {
-            if(rho == 1)
+            if(rho == 1.0)
             {
                 return 1 / (K+1);
             }
@@ -245,6 +245,7 @@ double Calculation::Q(int S, int K, double lambda, double mu, int j)
             for(int i=0; i<S-1; i++)
             {
                 sum += qPow(rho * S, j) / factorial(j);
+                // ???
                 sum += qPow(rho * S, S) / (factorial(S) * (1-rho));
             }
 
@@ -321,6 +322,7 @@ double Calculation::P(int S, int K, double lambda, double mu, int t)
         {
             // J'ai pas trouvé la formule
             p = -2;
+
         }
 
     }
@@ -370,6 +372,96 @@ double Calculation::Pq(int S, int K, double lambda, double mu, int t)
     }
     double Pqt = qExp(0 - S*mu*t*(1 - rho) * Pq0);
     return Pqt;
+}
+
+/**
+ * @brief Calculation::Qj
+ * @param S
+ * @param K
+ * @param lambda
+ * @param mu
+ * @param j
+ * @param flag 0 : plus que, 1 : moins que
+ * @return
+ * La probabilité qu'il y a deja j clients dans le systeme quand il arrive
+ */
+double Calculation::Qj(int S, int K, double lambda, double mu, int j)
+{
+    double rho;
+    double q0  = Q0(S,K,lambda,mu,0);
+    if(S == 1) {
+        // M | M | 1 q0=1-rho, qj = (p^j)*(1-rho)
+        rho = lambda / mu;
+        if(rho > 1) {
+            return -2;
+        } else {
+            if(j == 0) {
+                return q0;
+            } else {
+                return qPow(rho, j)*q0;
+            }
+        }
+
+    } else {
+        // M | M | S
+        rho = lambda / (S * mu);
+        if(rho < 1) {
+            double res;
+            if(j == 0) {
+                res = q0;
+            } else if(j > 0 && j <= S) {
+                res = ( qPow((rho * S), j) / factorial(j) ) * q0;
+            } else {
+                res = ((qPow(S , S) * qPow(rho, j))/factorial(S)) * q0;
+            }
+            return res;
+        } else {
+            return -2;
+        }
+
+    }
+}
+
+/**
+ * @brief Calculation::Q0
+ * @param S
+ * @param K
+ * @param lambda
+ * @param mu
+ * @param j
+ * @return
+ */
+double Calculation::Q0(int S, int K, double lambda, double mu, int j)
+{
+    double rho;
+    double q0;
+    if(S == 1) {
+        // M | M | 1 q0=1-rho, qj = (p^j)*(1-rho)
+        rho = lambda / mu;
+        q0 = 1 - rho;
+        if(rho > 1) {
+            return -2;
+        } else {
+            return q0;
+        }
+
+    } else {
+        // M | M | S
+        double q0;
+        rho = lambda / (S * mu);
+        double temp = 0.0;
+        for (int i=0; i<S; i++) {
+            temp += qPow(rho*S, i) / factorial(j);
+        }
+        q0 = 1 / (temp + (qPow(rho*S,S) / (factorial(S)*(1-rho))));
+
+        if(rho < 1) {
+            return q0;
+        } else {
+            return -2;
+        }
+
+    }
 }
 
 

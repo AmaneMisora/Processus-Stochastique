@@ -253,24 +253,58 @@ void MainWindow::update_result()
 // Question 4 (Qj)
         if(ui->ComboBoxQuestion->currentIndex() == 4)
         {
-            if(ui->ComboBoxQ4->currentIndex() == 0) // plus de
-            {
+                if(ui->ComboBoxQ4->currentIndex() == 0) // plus de j
+                {
+                    //P(x>j) = 1 - P(x<=j) = 1-(q0+q1+..+qj)
+                    int j = ui->SpinBoxQ4->value();
+                    double sum = 0;
+                    for (int i=0; i<=j; i++) {
+                        sum = sum + Calculation::Qj(S,K,lamdba,mu,i);
+                    }
+                    Result = 1 - sum;
 
-            }
-            else if(ui->ComboBoxQ4->currentIndex() == 1) // moins de
-            {
+                    Answer.append("La probabilité d'avoir plus de ");
+                    Answer.append(QString(j) + " clients dans la boutique ");
+                    Answer.append("est : " + QString::number(Result * 100) + "%");
+                    Answer.append("\n q0 = " +QString::number(Calculation::Q0(S,K,lamdba,mu,0)));
 
-            }
-            else if(ui->ComboBoxQ4->currentIndex() == 2) // entre
-            {
+                }
+                else if(ui->ComboBoxQ4->currentIndex() == 1) // moins de j
+                {
+                    // P(x<j) = q0 + q1 + ... + qj-1
+                    int j = ui->SpinBoxQ4->value();
+                    double sum = 0;
+                    for (int i=0; i<j; i++) {
+                        sum  = sum + Calculation::Qj(S,K,lamdba,mu,i);
+                    }
+                    Result = sum;
 
-            }
-            else
-            {
-                Result = -2;
-            }
+                    Answer.append("La probabilité d'avoir moins de ");
+                    Answer.append(QString(j) + " clients dans la boutique ");
+                    Answer.append("est : " + QString::number(Result * 100) + "%");
+                }
+                else if(ui->ComboBoxQ4->currentIndex() == 2) // entre j et n
+                {
+                    // P(j<=x<=n) = qj +..+qn
+                    int j = ui->SpinBoxQ4->value();
+                    int n = ui->SpinBoxQ4_2->value();
+                    double sum = 0;
+                    for (int i=j; i<=n; i++) {
+                        sum = sum + Calculation::Qj(S,K,lamdba,mu,i);
+                    }
+                    Result = sum;
 
-        }
+                    Answer.append("La probabilité d'avoir entre ");
+                    Answer.append(QString(j) + " et " + QString(n));
+                    Answer.append(" dans la boutique ");
+                    Answer.append("est : " + QString::number(Result * 100) + "%");
+
+                }
+                else
+                {
+                    Result = -2;
+                }
+         }
 
 
 // Question 5 (P)
@@ -550,4 +584,13 @@ void MainWindow::on_PushButtonGraphTime_clicked()
     dialog.Init(S,K,lamdba,mu);
 
     dialog.exec();
+}
+
+void MainWindow::on_ComboBoxQ4_currentIndexChanged(int index)
+{
+    if(index == 2) {
+        ui->SpinBoxQ4_2->show();
+    } else {
+        ui->SpinBoxQ4_2->hide();
+    }
 }

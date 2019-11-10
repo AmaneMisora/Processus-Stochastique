@@ -35,6 +35,8 @@ private slots:
 
     void on_PushButtonGraphTime_clicked();
 
+    void on_ComboBoxQ4_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     double FrequencyConvertion(double frequency, int unit);
