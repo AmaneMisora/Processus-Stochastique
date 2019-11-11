@@ -466,4 +466,3 @@ double Calculation::Q0(int S, int K, double lambda, double mu, int j)
 
 
 
-
