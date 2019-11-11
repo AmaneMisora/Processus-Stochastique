@@ -594,3 +594,17 @@ void MainWindow::on_ComboBoxQ4_currentIndexChanged(int index)
         ui->SpinBoxQ4_2->hide();
     }
 }
+
+void MainWindow::on_PushButtonGrathLenth_clicked()
+{
+    DialogGraphQuene dialog;
+    int S = ui->SpinBoxNbServer->value();
+    int K = ui->SpinBoxNbMaxPers->value();
+    double lamdba = FrequencyConvertion(ui->DoubleSpinBoxFrequenceArrivee->value(), ui->ComboBoxFrequenceArrivee->currentIndex());
+    double mu = FrequencyConvertion(ui->DoubleSpinBoxFrequenceService->value(), ui->ComboBoxFrequenceService->currentIndex());
+
+    dialog.Init(S,K,lamdba,mu);
+    dialog.exec();
+
+
+}

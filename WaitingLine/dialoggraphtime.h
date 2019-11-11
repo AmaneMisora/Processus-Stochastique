@@ -16,7 +16,7 @@ public:
     explicit DialogGraphTime(QWidget *parent = 0);
     ~DialogGraphTime();
     void Init(int S, int K, double lambda, double mu);
-    
+
 private:
     Ui::DialogGraphTime *ui;
 };

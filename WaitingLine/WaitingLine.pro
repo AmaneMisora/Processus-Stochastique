@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT    += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,7 +20,8 @@ SOURCES += main.cpp\
     Model/solution.cpp \
     calculation.cpp \
     dialogresume.cpp \
-    dialoggraphtime.cpp
+    dialoggraphtime.cpp \
+    dialoggraphquene.cpp
 
 HEADERS  += mainwindow.h \
     Model/donnee.h \
@@ -27,8 +29,10 @@ HEADERS  += mainwindow.h \
     Model/solution.h \
     calculation.h \
     dialogresume.h \
-    dialoggraphtime.h
+    dialoggraphtime.h \
+    dialoggraphquene.h
 
 FORMS    += mainwindow.ui \
     dialogresume.ui \
-    dialoggraphtime.ui
+    dialoggraphtime.ui \
+    dialoggraphquene.ui

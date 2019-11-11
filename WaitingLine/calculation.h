@@ -15,6 +15,7 @@ public:
     static double Wq(int S, int K, double lambda, double mu);
     static double Q(int S, int K, double lambda, double mu, int j);
     static double P(int S, int K, double lambda, double mu, int t);
+    static double P(int S, int K, double lambda, double mu, double t);
     static double Pq(int S, int K, double lambda, double mu, int t);
     static double Qj(int S, int K, double lambda, double mu, int j);
     static double Q0(int S, int K, double lambda, double mu, int j);
