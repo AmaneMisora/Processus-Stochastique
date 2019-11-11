@@ -264,9 +264,9 @@ void MainWindow::update_result()
                     Result = 1 - sum;
 
                     Answer.append("La probabilité d'avoir plus de ");
-                    Answer.append(QString(j) + " clients dans la boutique ");
+                    Answer.append(QString::number(j) + " clients dans la boutique ");
                     Answer.append("est : " + QString::number(Result * 100) + "%");
-                    Answer.append("\n q0 = " +QString::number(Calculation::Q0(S,K,lamdba,mu,0)));
+                   // Answer.append("\n q0 = " +QString::number(Calculation::Q0(S,K,lamdba,mu,0)));
 
                 }
                 else if(ui->ComboBoxQ4->currentIndex() == 1) // moins de j
@@ -280,7 +280,7 @@ void MainWindow::update_result()
                     Result = sum;
 
                     Answer.append("La probabilité d'avoir moins de ");
-                    Answer.append(QString(j) + " clients dans la boutique ");
+                    Answer.append(QString::number(j) + " clients dans la boutique ");
                     Answer.append("est : " + QString::number(Result * 100) + "%");
                 }
                 else if(ui->ComboBoxQ4->currentIndex() == 2) // entre j et n
@@ -295,7 +295,7 @@ void MainWindow::update_result()
                     Result = sum;
 
                     Answer.append("La probabilité d'avoir entre ");
-                    Answer.append(QString(j) + " et " + QString(n));
+                    Answer.append(QString::number(j) + " et " + QString::number(n));
                     Answer.append(" dans la boutique ");
                     Answer.append("est : " + QString::number(Result * 100) + "%");
 
