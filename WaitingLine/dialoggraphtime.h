@@ -2,6 +2,8 @@
 #define DIALOGGRAPHTIME_H
 
 #include <QDialog>
+#include <QtMath>
+#include <QGraphicsTextItem>
 #include "calculation.h"
 
 namespace Ui {
@@ -17,6 +19,7 @@ public:
     ~DialogGraphTime();
     void Init(int S, int K, double lambda, double mu);
     
+    QString ResultConvertion(double resultToConvert);
 private:
     Ui::DialogGraphTime *ui;
 };

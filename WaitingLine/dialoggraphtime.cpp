@@ -7,14 +7,14 @@ DialogGraphTime::DialogGraphTime(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    double graphicsViewSizeY = 200;
-    double graphicsViewSizeX = 400;
+    double graphicsViewSizeY = 400;
+    double graphicsViewSizeX = 800;
 
-    ui->graphicsView->setScene(new QGraphicsScene(-20,-20,graphicsViewSizeX*2,graphicsViewSizeY*2,this));
+    ui->graphicsView->setScene(new QGraphicsScene(-20,-20,graphicsViewSizeX,graphicsViewSizeY,this));
 
     QPen PenBlack = QPen(Qt::black);
     ui->graphicsView->scene()->addLine(0,-1000,0,1000,PenBlack);
-    ui->graphicsView->scene()->addLine(-1000,graphicsViewSizeY*2-40,1000,graphicsViewSizeY*2-40,PenBlack);
+    ui->graphicsView->scene()->addLine(-1000,graphicsViewSizeY-40,1000,graphicsViewSizeY-40,PenBlack);
 }
 
 DialogGraphTime::~DialogGraphTime()
@@ -24,36 +24,144 @@ DialogGraphTime::~DialogGraphTime()
 
 void DialogGraphTime::Init(int S, int K, double lambda, double mu)
 {
+
     QVector<double> Results = QVector<double>();
     double MaxResult = 0;
-    int MaxTime = 10/(mu+lambda);
+    double TimeScale;
 
-    QPen PenBlue = QPen(QColor(100,100,255,100));
+    QPen PenBlue = QPen(QColor(100,100,255,100), 2);
 
-    // Création de la table des résultats et récupèration du max
-    for(int t=0; t<MaxTime; t+=1)
+    QGraphicsTextItem* tmpTxt;
+
+    // Recherche de l'échelle de temps
+    if((1/mu) < 10)
     {
-        double result = Calculation::P(S, K, lambda, mu, t) - Calculation::P(S, K, lambda, mu, t+1);
+        TimeScale = 0.1;
+    }
+    if((1/mu) < 100)
+    {
+        TimeScale = 0.3;
+    }
+    else if((1/mu) < 1000)
+    {
+        TimeScale = 1;
+    }
+    else if((1/mu) < 3000)
+    {
+        TimeScale = 36;
+    }
+    else if((1/mu) < 10000)
+    {
+        TimeScale = 86.4;
+    }
+    else if((1/mu) < 100000)
+    {
+        TimeScale = 864;
+    }
+    else if((1/mu) < 1000000)
+    {
+        TimeScale = 8640;
+    }
+    else if((1/mu) < 10000000)
+    {
+        TimeScale = 86400;
+    }
+    else
+    {
+        TimeScale = 864000;
+    }
 
-        if(result > 0.0000001)
-        {
-            Results.append(result);
-        }
+    qDebug() << 1/mu;
 
+    // Ajout des tirets horizontaux
+    for(int i=0; i<20; i+= 1)
+    {
+        ui->graphicsView->scene()->addLine(i*40, 360, i*40, 365);
+        tmpTxt = ui->graphicsView->scene()->addText(ResultConvertion(i*TimeScale*40));
+        tmpTxt->setPos(i*40-5, 360);
+    }
+
+    // Création de la table de résultats et recherch du max
+    for(int i=0; i<800; i+= 1)
+    {
+        double result = Calculation::P(S, K, lambda, mu, i*TimeScale) - Calculation::P(S, K, lambda, mu, (i+1)*TimeScale);
+        Results.append(result);
+
+        // Mise à jour du max
         if(result>MaxResult)
         {
             MaxResult = result;
         }
     }
 
-    qDebug() << "a";
-
-    // Affichage es résultats
-    for(int t=0; t<Results.size()-1; t++)
+    // Affichage des résultats
+    if(MaxResult > 0)
     {
-        ui->graphicsView->scene()->addRect(t*1000/Results.size(),360,1,-Results.at(t)*360/MaxResult,PenBlue);
+        for(int i=0; i<800; i+= 1)
+        {
+            //Position horizontale du rectangle
+            double posx = i;
+
+            // Hauteur du retangle
+            double height = -Results.at(i)*360/MaxResult;
+
+            // Création du rectangle
+            ui->graphicsView->scene()->addRect(posx,360,1,height,PenBlue);
+        }
     }
+
+/*
+    // Création de la table des résultats et récupèration du max
+    for(double i=0; i<1000; i++)
+    {
+        double result = Calculation::P(S, K, lambda, mu, i*TimeScale) - Calculation::P(S, K, lambda, mu, i+1*TimeScale);
+
+        Results.append(result);
+
+        // Mise à jour du max
+        if(result>MaxResult)
+        {
+            MaxResult = result;
+        }
+    }
+
+    // Affichage des résultats
+    for(double i=0; i<1000; i++)
+    {
+        //Position horizontale du rectangle
+        double posx = i*100/Results.size();
+
+        // Hauteur du retangle
+        double height = -Results.at(i)*360/MaxResult;
+
+        // Création du rectangle
+        ui->graphicsView->scene()->addRect(posx,360,1,height,PenBlue);
+    }
+*/
 
 }
 
 
+QString DialogGraphTime::ResultConvertion(double resultToConvert)
+{
+    QString ConvertedResult = "";
+
+    if(resultToConvert < 90) // moins d'1min30
+    {
+        ConvertedResult.append( QString::number(resultToConvert) + " s" );
+    }
+    else if(resultToConvert < 90*60) // moins d'1h30
+    {
+        ConvertedResult.append( QString::number(resultToConvert / 60) + " min" );
+    }
+    else if(resultToConvert < 60*60*72) // moins de 72 heures
+    {
+        ConvertedResult.append( QString::number(resultToConvert / 60 / 60) + " h" );
+    }
+    else // plus de 72 heures
+    {
+        ConvertedResult.append( QString::number(resultToConvert / 60 / 60 / 24) + " j" );
+    }
+
+    return ConvertedResult;
+}
