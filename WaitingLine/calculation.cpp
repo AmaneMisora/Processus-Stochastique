@@ -245,9 +245,9 @@ double Calculation::Q(int S, int K, double lambda, double mu, int j)
             for(int i=0; i<S-1; i++)
             {
                 sum += qPow(rho * S, j) / factorial(j);
-                // ???
-                sum += qPow(rho * S, S) / (factorial(S) * (1-rho));
             }
+
+            sum += qPow(rho * S, S) / (factorial(S) * (1-rho));
 
             return 1/sum;
         }
@@ -297,11 +297,12 @@ double Calculation::P(int S, int K, double lambda, double mu, int t)
     double rho;
     if(S == 1) {
         rho = lambda / mu;
-        q0 = Q(S,K,lambda,mu,0);
     } else {
         rho = lambda / (mu * S);
-        q0 = Q(S,K,lambda,mu,0);
     }
+
+    // Calcul de q0
+    q0 = Q(S,K,lambda,mu,0);
 
     // Calcul de P selon le type de queue
     if(S == 1)
@@ -322,9 +323,7 @@ double Calculation::P(int S, int K, double lambda, double mu, int t)
         {
             // J'ai pas trouvé la formule
             p = -2;
-
         }
-
     }
     else
     {
