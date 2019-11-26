@@ -28,9 +28,9 @@ HEADERS  += mainwindow.h \
     Model/solution.h \
     calculation.h \
     dialogresume.h \
-    dialoggraphtime.h \
-    dialoggraphquene.h
+    dialoggraphtime.h
 
 FORMS    += mainwindow.ui \
     dialogresume.ui \
-    dialoggraphtime.ui
+    dialoggraphtime.ui \
+    dialoggraphquene.ui
