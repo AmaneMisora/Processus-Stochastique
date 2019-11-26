@@ -148,19 +148,19 @@ QString DialogGraphTime::ResultConvertion(double resultToConvert)
 
     if(resultToConvert < 90) // moins d'1min30
     {
-        ConvertedResult.append( QString::number(resultToConvert) + " s" );
+        ConvertedResult.append( QString::number(resultToConvert).mid(0,4) + " s" );
     }
     else if(resultToConvert < 90*60) // moins d'1h30
     {
-        ConvertedResult.append( QString::number(resultToConvert / 60) + " min" );
+        ConvertedResult.append( QString::number(resultToConvert / 60).mid(0,4) + " min" );
     }
     else if(resultToConvert < 60*60*72) // moins de 72 heures
     {
-        ConvertedResult.append( QString::number(resultToConvert / 60 / 60) + " h" );
+        ConvertedResult.append( QString::number(resultToConvert / 60 / 60).mid(0,4) + " h" );
     }
     else // plus de 72 heures
     {
-        ConvertedResult.append( QString::number(resultToConvert / 60 / 60 / 24) + " j" );
+        ConvertedResult.append( QString::number(resultToConvert / 60 / 60 / 24).mid(0,4) + " j" );
     }
 
     return ConvertedResult;

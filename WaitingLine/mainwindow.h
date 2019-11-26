@@ -37,6 +37,8 @@ private slots:
 
     void on_ComboBoxQ4_currentIndexChanged(int index);
 
+    void on_SpinBoxQ4_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     double FrequencyConvertion(double frequency, int unit);
