@@ -8,7 +8,6 @@
 #include "calculation.h"
 #include "dialogresume.h"
 #include "dialoggraphtime.h"
-#include "dialoggraphquene.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,7 +37,7 @@ private slots:
 
     void on_ComboBoxQ4_currentIndexChanged(int index);
 
-    void on_PushButtonGrathLenth_clicked();
+   // void on_PushButtonGrathLenth_clicked();
 
 private:
     Ui::MainWindow *ui;
